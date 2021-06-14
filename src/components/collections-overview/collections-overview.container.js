@@ -1,12 +1,12 @@
-import React from "react";
-import { gql } from "apollo-boost";
-import { Query } from "react-apollo";
+import React from 'react';
+import { gql } from 'apollo-boost';
+import { Query } from 'react-apollo';
 
-import CollectionsOverview from "./collections-overview.component";
-import Spinner from "../spinner/spinner.component";
+import CollectionsOverview from './collections-overview.component';
+import Spinner from '../spinner/spinner.component';
 
 const GET_COLLECTIONS = gql`
-  {
+  query GetCollections {
     collections {
       id
       title
@@ -23,9 +23,6 @@ const GET_COLLECTIONS = gql`
 const CollectionsOverviewContainer = () => (
   <Query query={GET_COLLECTIONS}>
     {({ loading, error, data }) => {
-      console.log(loading);
-      console.log(error);
-      console.log(data);
       if (loading) return <Spinner />;
       return <CollectionsOverview collections={data.collections} />;
     }}

@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import { gql } from "appolo-boost";
-import { Query } from "react-apollo";
+import { gql } from 'appolo-boost';
+import { Query } from 'react-apollo';
 
-import CollectionPage from "./collection.component";
-import Spinner from "../spinner/spinner.component";
+import CollectionPage from './collection.component';
+import Spinner from '../spinner/spinner.component';
 
 const GET_COLLECTION_BY_TITLE = gql`
   query getCollectionsByTitle($title: String!) {
