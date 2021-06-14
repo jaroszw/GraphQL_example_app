@@ -17,14 +17,14 @@ import { resolvers, typeDefs } from "./graphql/resolver";
 import "./index.css";
 import App from "./App";
 
-const httpLink = createHttpLink({
+const link = createHttpLink({
   uri: "https://crwn-clothing.com",
 });
 
 const cache = new InMemoryCache();
 
 const client = new ApolloClient({
-  link: httpLink,
+  link,
   cache,
   typeDefs,
   resolvers,
