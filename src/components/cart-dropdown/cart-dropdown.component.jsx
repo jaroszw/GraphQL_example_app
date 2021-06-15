@@ -1,11 +1,31 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
-import CustomButton from '../custom-button/custom-button.component';
-import CartItem from '../cart-item/cart-item.component';
+import React from "react";
+import { withRouter } from "react-router-dom";
+import CustomButton from "../custom-button/custom-button.component";
+import CartItem from "../cart-item/cart-item.component";
 
-import './cart-dropdown.styles.scss';
+import "./cart-dropdown.styles.scss";
 
-const CartDropdown = ({ cartItems, history, toggleCartHidden }) => {
+import { useMutation, useQuery } from "react-apollo";
+import { gql } from "apollo-boost";
+
+const TOGGLE_CART_HIDDEN = gql`
+  mutation ToggleCartHidden {
+    toggleCartHidden @client
+  }
+`;
+
+const GET_CART_ITEMS = gql`
+  {
+    cartItems @client
+  }
+`;
+
+const CartDropdown = ({ history }) => {
+  const [toggleCartHidden] = useMutation(TOGGLE_CART_HIDDEN);
+  const {
+    data: { cartItems },
+  } = useQuery(GET_CART_ITEMS);
+
   return (
     <div className="cart-dropdown">
       <div className="cart-items">
@@ -19,7 +39,7 @@ const CartDropdown = ({ cartItems, history, toggleCartHidden }) => {
       </div>
       <CustomButton
         onClick={() => {
-          history.push('/checkout');
+          history.push("/checkout");
           toggleCartHidden();
         }}
       >

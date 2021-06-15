@@ -1,20 +1,34 @@
 import React from "react";
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
-
-import { selectCartItemsCount } from "../../redux/cart/cart.selectors";
 import { ReactComponent as ShoppingIcon } from "../../assets/shopping-bag.svg";
 import "./cart-icon.styles.scss";
 
-const CartIcon = ({ toggleCartHidden, itemCount }) => (
-  <div className="cart-icon" onClick={toggleCartHidden}>
-    <ShoppingIcon className="shopping-icon" />
-    <span className="item-count">{itemCount}</span>
-  </div>
-);
+import { useMutation, useQuery } from "react-apollo";
+import { gql } from "apollo-boost";
 
-const mapStateToProps = createStructuredSelector({
-  itemCount: selectCartItemsCount,
-});
+const TOGGLE_CART_HIDDEN = gql`
+  mutation ToggleCartHidden {
+    toggleCartHidden @client
+  }
+`;
 
-export default connect(mapStateToProps, null)(CartIcon);
+const GET_ITEM_COUNT = gql`
+  {
+    itemCount @client
+  }
+`;
+
+const CartIcon = () => {
+  const [toggleCartHidden] = useMutation(TOGGLE_CART_HIDDEN);
+  const {
+    data: { itemCount },
+  } = useQuery(GET_ITEM_COUNT);
+
+  return (
+    <div className="cart-icon" onClick={toggleCartHidden}>
+      <ShoppingIcon className="shopping-icon" />
+      <span className="item-count">{itemCount}</span>
+    </div>
+  );
+};
+
+export default CartIcon;

@@ -1,8 +1,8 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
+import React from "react";
+import { withRouter } from "react-router-dom";
 
-import { default as CollectionItem } from '../collection-item/collection-item.container.js';
-import './collection-preview.styles.scss';
+import { default as CollectionItem } from "../collection-item/collection-item.container.js";
+import "./collection-preview.styles.scss";
 
 const CollectionPreview = ({ title, items, history, match }) => {
   return (
