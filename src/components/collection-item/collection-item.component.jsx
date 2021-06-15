@@ -2,7 +2,17 @@ import React from "react";
 import CustomButton from "../custom-button/custom-button.component";
 import "./collection-item.styles.scss";
 
-const CollectionItem = ({ item, addItem }) => {
+import { gql } from "apollo-boost";
+import { useMutation } from "react-apollo";
+
+const ADD_ITEM_TO_CART = gql`
+  mutation AddItemToCart($item: Item!) {
+    addItemToCart(item: $item) @client
+  }
+`;
+
+const CollectionItem = ({ item }) => {
+  const [addItemToCart, { data }] = useMutation(ADD_ITEM_TO_CART);
   const { name, price, imageUrl } = item;
 
   return (
@@ -17,7 +27,10 @@ const CollectionItem = ({ item, addItem }) => {
         <span className="name">{name}</span>
         <span className="price">{price}</span>
       </div>
-      <CustomButton onClick={() => addItem(item)} inverted>
+      <CustomButton
+        onClick={() => addItemToCart({ variables: { item: item } })}
+        inverted
+      >
         Add to cart
       </CustomButton>
     </div>
