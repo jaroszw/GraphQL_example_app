@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import { gql } from 'appolo-boost';
-import { Query } from 'react-apollo';
+import { gql } from "apollo-boost";
+import { Query } from "react-apollo";
 
-import CollectionPage from './collection.component';
-import Spinner from '../spinner/spinner.component';
+import CollectionPage from "./collection.component";
+import Spinner from "../../components/spinner/spinner.component";
 
 const GET_COLLECTION_BY_TITLE = gql`
   query getCollectionsByTitle($title: String!) {
@@ -20,16 +20,18 @@ const GET_COLLECTION_BY_TITLE = gql`
   }
 `;
 
-const CollectionPageContainer = ({ match }) => (
-  <Query
-    query={GET_COLLECTION_BY_TITLE}
-    variables={{ title: match.params.collection }}
-  >
-    {({ loading, error, data: { getCollectionsByTitle } }) => {
-      if (loading) return <Spinner />;
-      return <CollectionPage collection={getCollectionsByTitle} />;
-    }}
-  </Query>
-);
+const CollectionPageContainer = ({ match }) => {
+  return (
+    <Query
+      query={GET_COLLECTION_BY_TITLE}
+      variables={{ title: match.params.collection }}
+    >
+      {({ loading, error, data: { getCollectionsByTitle } }) => {
+        if (loading) return <Spinner />;
+        return <CollectionPage collection={getCollectionsByTitle} />;
+      }}
+    </Query>
+  );
+};
 
 export default CollectionPageContainer;
