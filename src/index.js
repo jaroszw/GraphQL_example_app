@@ -13,6 +13,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloClient, gql } from "apollo-boost";
 
 import { resolvers, typeDefs } from "./graphql/resolver";
+import { default as data } from "./graphql/initial-data";
 
 import "./index.css";
 import App from "./App";
@@ -30,13 +31,7 @@ const client = new ApolloClient({
   resolvers,
 });
 
-client.writeData({
-  data: {
-    cartHidden: true,
-    cartItems: [],
-    itemCount: 0,
-  },
-});
+client.writeData({ data });
 
 ReactDOM.render(
   <ApolloProvider client={client}>
